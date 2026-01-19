@@ -1,88 +1,125 @@
-
 # SOC L1 Alert Triage Framework
 
 ## Purpose
-This document defines the standard alert triage workflow followed by a
+This document defines the standard alert triage framework followed by a
 Security Operations Center (SOC) Level 1 analyst.
 
-The goal is to validate alerts, identify false positives, detect true threats,
-and escalate confirmed incidents efficiently.
+The framework is designed to ensure consistent, structured, and efficient
+handling of security alerts across endpoint, identity, email, and network
+domains.
+
+---
+
+## Scope of Alerts Covered
+This framework applies to, but is not limited to, the following alert types:
+
+- Brute Force Login Attempts
+- Malware / Suspicious Process Execution
+- Phishing Email Attacks
+- Suspicious Login / Impossible Travel
+- Active Directory Attacks
+- DDoS (Distributed Denial of Service) Attacks
 
 ---
 
 ## 1. Alert Intake
-The analyst begins by collecting basic alert details:
+The SOC L1 analyst begins by gathering initial alert details:
 
-- Alert name and ID
-- Severity level
-- Timestamp (UTC)
-- Affected user / host / IP
-- Detection source (SIEM, EDR, Email Gateway, Firewall)
+- Alert name and unique ID
+- Severity level (Low / Medium / High)
+- Detection timestamp (UTC)
+- Affected user, host, IP, or service
+- Alert source (SIEM, EDR, Email Gateway, Firewall, IDS/IPS)
 
 ---
 
 ## 2. Initial Validation
-The analyst determines whether the alert represents expected behavior.
+The analyst validates whether the alert may represent expected or benign
+behavior.
 
 Key questions:
-- Is this activity normal for this user or system?
-- Has this alert occurred before?
-- Is the asset business-critical?
+- Is the activity expected for this user or system?
+- Has this alert been observed previously?
+- Is the affected asset business-critical?
+- Is there a known maintenance or approved change?
 
 ---
 
-## 3. Investigation
-If suspicious, deeper investigation is performed:
+## 3. Investigation & Analysis
+If suspicious activity is identified, the analyst performs deeper analysis:
 
-- Review relevant logs
-- Correlate with other alerts
+- Review relevant logs and telemetry
+- Correlate with related alerts or events
 - Identify Indicators of Compromise (IOCs)
-- Check IP/domain/file reputation
+- Check IP, domain, or file reputation
+- Analyze behavior patterns and timelines
 
 ---
 
-## 4. Decision Making
-Each alert must be classified as one of the following:
+## 4. Classification & Decision
+Each alert must be classified with clear justification as one of the following:
 
-- False Positive
-- True Positive – Benign
-- True Positive – Malicious
+- **False Positive** – Benign and expected behavior
+- **True Positive (Benign)** – Policy violation without malicious intent
+- **True Positive (Malicious)** – Confirmed or highly suspected attack
 
-The decision must be supported with evidence.
+Evidence must support the classification.
 
 ---
 
-## 5. Response & Escalation
-Based on severity and impact:
+## 5. Response Actions
+Based on alert severity and analyst permissions:
 
-- Close alert with documentation
-- Contain threat if L1 permissions allow
-- Escalate to SOC L2 when required
+- Close alert with documented reasoning
+- Perform initial containment (if allowed)
+- Recommend remediation actions
+- Notify affected users or teams if required
+
+---
+
+## 6. Escalation Criteria
+Alerts must be escalated to SOC L2 or Incident Response when:
+
+- Successful compromise is confirmed
+- Privileged or domain accounts are involved
+- Malware execution is validated
+- Lateral movement is suspected
+- Business-critical services are impacted (e.g., DDoS)
 
 ---
 
 ## Severity Levels & SLA
 
-| Severity | Description | SLA |
-|--------|------------|-----|
-| Low | Informational | 24 hours |
-| Medium | Suspicious activity | 8 hours |
-| High | Confirmed compromise | 1 hour |
+| Severity | Description | Expected Action | SLA |
+|--------|------------|----------------|-----|
+| Low | Informational or expected behavior | Document and close | 24 hours |
+| Medium | Suspicious activity | Investigate and validate | 8 hours |
+| High | Confirmed or likely compromise | Immediate escalation | 1 hour |
 
 ---
 
-## Escalation Criteria
-Escalate to SOC L2 when:
+## Documentation Requirements
+Every alert investigation must include:
 
-- Successful compromise is confirmed
-- Malware execution is validated
-- Privileged account is involved
-- Lateral movement is suspected
+- Alert summary
+- Logs reviewed
+- Evidence (screenshots, log excerpts)
+- Final classification decision
+- Actions taken or recommended
+- Analyst name and timestamp
 
 ---
 
 ## Analyst Responsibilities
-- Remain calm and methodical
+- Remain calm and methodical under pressure
+- Follow defined triage procedures
 - Validate before escalating
-- Document every action taken
-- Follow process over assumptions
+- Maintain accurate and complete documentation
+- Communicate clearly with senior analysts and teams
+
+---
+
+## Framework Objective
+This framework ensures that SOC L1 analysts handle alerts consistently,
+reduce false positives, and escalate genuine threats efficiently while
+supporting overall security operations.
